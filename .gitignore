@@ -1,3 +1,10 @@
+sujet-tp1_files/
+*.tex
+*.pdf 
+*.html
+
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

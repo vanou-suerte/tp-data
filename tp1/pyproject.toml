@@ -1,0 +1,10 @@
+[project]
+name = "tp1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "vanou-suerte", email = "vanessa.pech@gign.fr" }
+]
+requires-python = ">=3.15"
+dependencies = []

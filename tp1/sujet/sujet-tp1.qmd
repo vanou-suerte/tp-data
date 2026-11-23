@@ -1,0 +1,123 @@
+---
+title: "TP1 - Import de formats et accès aux API"
+subtitle: "ECUE-DATA-03 - Cours d'ingénierie"
+author: "Ana-Maria Raimond, Laura Wenclik, Vanessa Pech"
+lang: fr
+date: today
+date-format: long
+format:
+  html:
+    toc: true 
+    theme: cosmo
+  typst:
+    number-sections: true
+---
+
+# Objectifs
+Dans ce TP, vous allez apprendre à manipuler les principaux formats standards de données en géomatique pour comprendre les différences entre elles et les récupérer depuis différentes sources.
+
+- Comprendre les différences entre les formats standards en géomatique :
+    - CSV
+    - GeoJSON
+    - GeoPackage (GPKG)
+    - GeoParquet
+
+
+- Charger des données depuis différentes sources :
+    - BDTOPO depuis carte.gouv
+    - Points d'intérêt (POI) depuis OpenStreetMap (OSM)
+    - (des données de recherche depuis entrepot.recherche.data.gouv.fr)
+    - des flux depuis QGIS
+
+# Enoncé
+
+Dans le cadre du projet [Intforout](https://www.umr-lastig.fr/intforout/), John Dawson, un chercheur du [LASTIG](https://www.umr-lastig.fr/fr/) a produit un jeu de données des zones de rencontre potentielles entre chamois et randonneurs sur la zone de la [Réserve Nationale de Chasse et de Faune Sauvage des Bauges](https://parcdesbauges.com/reserve-nationale-de-chasse-et-de-faune-sauvage-rncfs/) qui est à cheval sur la Savoie et la Haute-Savoie, en utilisant plusieurs sources (traces GPS de randonneurs issues de Strava, Visorando, Camptocamp, etc.). Plus d'info sur la methode utilisée [ici pour les curieux.ses](https://www.researchgate.net/publication/406893378_A_Method_for_Spatializing_Disturbance_by_Detecting_Human-Wildlife_Encounters_from_GNSS_Trajectories) 
+
+
+Votre mission est de manipuler ce jeu de données de recherche et de le croiser avec d'autres données de références notamment la BDTOPO et OSM pour possiblement comprendre ce qui attire les randonneurs et repérer les secteurs à fort potentiel d’interaction.
+Vous découvrirez les limites de certains formats de données géographiques...
+
+## Dossier du TP fourni 
+
+Le dossier se trouve dans : 
+FormationTemp > ING1 > DATA-03 > TP1
+
+
+```text
+TP1
+├── sujet_tp1.pdf
+├── manipulation_donnees_tp1.ipynb
+└── data
+    └── human_chamois_encounters.csv
+
+```
+
+Le dossier du TP1 contient :
+
+- le sujet du tp en pdf
+- un notebook qui contient les script à executer pendant le TP
+- un dossier data qui contient pour l'instant le jeu de données de recherche en format CSV
+
+## Etape 0 - Avant de commencer, un peu de préparation...
+
+1. Récupérer le zip associé au TP dans FormationTemp. Copiez le dans votre disque D: ou dossier perso, puis dézipper.
+
+2. Si ce n'est pas déjà fait, authentifiez-vous sur https://authentification.ensg.eu pour que votre machine accède à internet.
+
+
+::: {.callout-note}
+## Note 
+Pour info, on vous a donnée directement le fichier des zones de rencontres de John en format CSV car le jeu de données est en cours de validation d'être publiés sur la plateforme [entrepot.recherche.data.gouv](https://entrepot.recherche.data.gouv.fr/dataverse/intforout) qui est donc la plateforme nationale souveraine permettant à la communauté scientifique française de déposer, publier, partager et ouvrir des données de recherche publique.
+:::
+
+
+## Etape 1 - Inspection du jeu de données
+
+1. Ouvrir le fichier csv dans un editeur ou un tableur
+
+    a. Quelle est la taille du CSV ?
+    b. Combien y'a t-il de lignes et de colonnes ?
+
+2. Ouvrir QGIS et créer un nouveau projet 
+
+    a. Ajouter le flux WMTS du fond carte Plan IGN issu de la Géoplateforme et placez-le en arrière-plan. (Vous l'avez fait dans le TP de carto GEOM02 !)
+
+::: {.callout-tip}
+## URL du service WMTS de la Géoplateforme de l'IGN
+[https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities](https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities)
+:::
+
+
+3. Ajouter le jeu de donnée dans QGIS. On va s'interresser à la colonne eca_h qui correspond à des zones où la présence humaine pourrait avoir influé sur le comportement des chamois.
+          
+    a. Cliquez sur Couche > Ajouter la couche > Ajouter couche de texte délimité
+
+    b. Que se passe t-il ? Pourquoi ?
+
+## Etape 2 - Vers d'autres formats de données
+
+1. Ouvrir le jupyter notebook du TP dans VScode. Assurez-vous que vous pouvez bien l'exécuter (Souvenirs/trauma du cours Théorie et Bonnes Pratiques en Informatique du S1)
+
+2. Exécuter la cellule qui permet de lire le jeu de données CSV.
+
+3. Convertir le jeu de données en Shapefile, GeoJSON, GeoPackage et GeoParquet.
+
+4. Ouvrir chacun de ces formats dans QGIS.
+
+    a. Avec quel format fait-on planter qgis ?
+
+
+
+## Etape 2 - Mesures et analyses des fichiers
+
+1. Exécuter la cellule de mesures des performance et taille des formats de données.
+
+
+2. Pause explications
+
+## Etape 3 - Ajout des chemins de randonnées venant de la BDTOPO
+
+Qu'est-ce qui peut bien attirer les randonneurs dans ou autour de ces zones ? Les chamois occupent des versants ou zones d’altitude spécifiques, mais les rencontres peuvent avoir un lien avec les itinéraires empruntés et des points d’arrêt ou d’attractivité des promeneurs. 
+
+1. Récupérer les chemins de randonnée depuis la BD TOPO via cartes.gouv.fr (en filtrant sur la nature d’itinéraire pédestre / sentier)
+

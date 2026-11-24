@@ -1,7 +1,7 @@
 ---
 title: "TP1 - Import de formats et accès aux API"
 subtitle: "ECUE-DATA-03 - Cours d'ingénierie"
-author: "Ana-Maria Raimond, Laura Wenclik, Vanessa Pech"
+author: "Vanessa Pech, Ana-Maria Raimond, Laura Wenclik"
 lang: fr
 date: today
 date-format: long

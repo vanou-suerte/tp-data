@@ -2,7 +2,7 @@ sujet-tp1_files/
 *.tex
 *.pdf 
 *.html
-.quarto
+.quarto/
 
 data/
 

@@ -45,7 +45,7 @@ FormationTemp > ING1 > DATA-03 > TP1
 ```text
 TP1
 ├── sujet_tp1.pdf
-├── manipulation_donnees_tp1.ipynb
+├── manipulation_donnees_student.ipynb
 └── data
     └── human_chamois_encounters.csv
 
@@ -77,14 +77,14 @@ Pour info, on vous a donnée directement le fichier des zones de rencontres de J
     a. Quelle est la taille du CSV ?
     b. Combien y'a t-il de lignes et de colonnes ?
 
-2. Ouvrir QGIS et créer un nouveau projet 
+2. Ouvrir QGIS et créer un nouveau projet
 
     a. Ajouter le flux WMTS du fond carte Plan IGN issu de la Géoplateforme et placez-le en arrière-plan. Vous l'avez fait dans le TP de carto GEOM02, cela ne fait pas de mal de le refaire ;)
 
-::: {.callout-tip}
-## URL du service WMTS de la Géoplateforme de l'IGN
-[https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities](https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities)
-:::
+       ::: {.callout-tip}
+       ## URL du service WMTS de la Géoplateforme de l'IGN
+       <https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities>
+       :::
 
 
 3. Ajouter le jeu de donnée dans QGIS. On va s'interresser à la colonne eca_h qui correspond à des zones où la présence humaine pourrait avoir influé sur le comportement des chamois.
@@ -97,7 +97,7 @@ Pour info, on vous a donnée directement le fichier des zones de rencontres de J
 
 1. Ouvrir le jupyter notebook du TP dans VScode. Assurez-vous que vous pouvez bien l'exécuter (Souvenirs/trauma du cours Théorie et Bonnes Pratiques en Informatique du S1)
 
-2. Exécuter la cellule qui permet de lire le jeu de données CSV.
+2. Complétez les cellules pour pouvoir lire le jeu de données CSV.
 
 3. Convertir le jeu de données en Shapefile, GeoJSON, GeoPackage et GeoParquet.
 
@@ -110,8 +110,10 @@ Pour info, on vous a donnée directement le fichier des zones de rencontres de J
 
 1. Exécuter la cellule de mesures des performance et taille des formats de données.
 
-
-2. Pause explications
+::: {.callout-note}
+## Note 
+En pratique, la différence entre formats ne se joue pas seulement à l’ouverture d’un fichier, mais aussi quand on calcule un attribut lié à la géométrie (ex. altitude, buffer) et quand on fait des traitements avec d'autres couches (analyse spatiale).
+:::
 
 ## Etape 4 - Ajout de données venant de la BDTOPO
 
@@ -121,46 +123,100 @@ Qu'est-ce qui peut bien attirer les randonneurs dans ou autour de ces zones ? Le
 
 2. Récupérer les chemins de randonnées et les parcs/réserves de la Savoie depuis la BD TOPO via [cartes.gouv.fr](https://cartes.gouv.fr/rechercher-une-donnee/search)
 
-::: {.callout-tip}
-## Un outil en ligne de documentation de la BDTopo
-[BDTOPO explorer](https://bdtopoexplorer.ign.fr/) permet de consulter et de rechercher la structure, les thèmes, les classes et les attributs de la BD TOPO, la base de données topographique de référence du territoire français.
-:::
+    a. Quelles sont les classes de la BDTOPO qui vont nous intéresser ?
+    b. Mettez les données téléchargées dans le dossier data
 
-        a. Quelles sont les classes de la BDTOPO qui vont nous intéresser ?
-        b. Mettez les données téléchargées dans le dossier data
+
+       ::: {.callout-tip}
+       ## Un outil en ligne de documentation de la BDTopo
+       [BDTOPO explorer](https://bdtopoexplorer.ign.fr/) permet de consulter et de rechercher la structure, les thèmes, les classes et les attributs de la BD TOPO, la base de données topographique de référence du territoire français.
+       :::
 
 3. Créez la couche qui correspond à la Réserve Nationale de Chasse et de Faune Sauvage des Bauges à partir des données téléchargées. La méthode la plus simple c'est via la table d'attribut notamment avec une selection par expression ("toponyme" = 'Réserve Nationale de Chasse et de Faune Sauvage des Bauges').
 
     a. Sauvegarder cette couche dans le format que vous préférez dans le dossier data (créer un dossier donneesCreees si vous le souhaitez)
-    b. Exportez cette couche au format Geojson et puis regardons ce fichier d'un peu plus près...
+    b. Exportez cette couche aussi au format Geojson (si ce n'était pas votre format préféré) et puis regardons ce fichier d'un peu plus près...
+    c. Visualiser votre GeoJSON dans [geojson.io](https://geojson.io/), vous y arrivez ?
 
-::: {.callout-tip}
-## Un outil web gratuit et open source pour le GeoJSON
-[geojson.io](https://geojson.io/) est un site qui permet de créer, visualiser et modifier des données géographiques au format GeoJSON directement dans le navigateur. Cela permet notamment de vérifier et déboguer des fichiers pour contrôler l'affichage, repérer des erreurs de syntaxe ou détecter des coordonnées inversées (latitude/longitude).
-:::
-
-        c. Visualiser votre GeoJSON dans geojson.io, vous y arrivez ?
+       ::: {.callout-tip}
+       ## Un outil web gratuit et open source pour le GeoJSON
+       [geojson.io](https://geojson.io/) est un site qui permet de créer, visualiser et modifier des données géographiques au format GeoJSON directement dans le navigateur. Cela permet notamment de vérifier et déboguer des fichiers pour contrôler l'affichage, repérer des erreurs de syntaxe ou détecter des coordonnées inversées (latitude/longitude).
+       :::
 
 
 4. A partir de cette couche, isoler les chemins de randonnées qui se trouve à l'intérieur de la réserve.
 
-    a. Utilisez l'outil de selection dans QGIS
+    a. Utilisez l'outil de Sélection par localisation dans QGIS
     b. Sauvegarder cette couche dans le format que vous préférez dans le dossier data
     c. Supprimez la couche de tous les parcs/reserves et les chemins de randonnées de la Savoie pour nettoyer un peu le projet
 
 ## Etape 5 - Ajout de données venant d'OpenStreetMap (OSM)
 
-Maintenant qu'on a ajouté les chemins de randonnée, on va intégrer des POI utiles ou attractifs pour les randonneurs (points d'eau, aires de pique-nique, points de vue remarquables). OSM est une base de données cartographiques mondiale, collaborative et libre, souvent surnommée le « Wikipédia de la carte ». Créé en 2004, ce projet permet à n'importe qui d'ajouter, de modifier et de réutiliser gratuitement des données géographiques sous licence libre.
+Maintenant qu'on a ajouté les chemins de randonnée, on va intégrer des POI utiles ou attractifs pour les randonneurs (points d'eau, aires de pique-nique, points de vue remarquables). [OSM](https://www.openstreetmap.org/#map=19/45.667726/6.243327&layers=D) est une base de données cartographiques mondiale, collaborative et libre, souvent surnommée le « Wikipédia de la carte ». Créé en 2004, ce projet permet à n'importe qui d'ajouter, de modifier et de réutiliser gratuitement des données géographiques sous licence libre.
 
-1. Ajouter les POI qui vous semblent pertinent qui se trouvent dans la réserve (points d’eau, points de vue / spots photo, aires de pique-nique etc...)
+1. Ajouter les POI qui vous semblent pertinent qui se trouvent dans la réserve des Bauges (points d’eau, points de vue / spots photo, aires de pique-nique etc...)
 
     a. Exécutez la cellule correspondante du jupyter notebook
-    b. Via [overpassturbo](http://overpass-turbo.eu/)
+    b. Cherchez d'autres types de POI qui vous semble pertinent à l'aide du site [taginfo](https://taginfo.openstreetmap.org/)
+    c. Chargez bien vos couches dans votre projet QGIS
 
-## Bonus - Repérer les zones à fort potentiel d'attrictivité autour des POI
+
+
+::: {.callout-note}
+## Note 
+Il existe [Overpass turbo](https://overpass-turbo.eu/), un outil de recherche géographique en ligne permettant d'interroger la base OpenStreetMap (OSM) pour extraire et afficher des données sur une carte interactive à partir de leurs tags. Son utilisation nécessite toutefois de maîtriser un langage de requête spécifique.
+:::
+
+
+## Bonus SIG - Repérer les zones à fort potentiel d'attrictivité autour des POI
 
 1. Beaucoup de zones de rencontres sont superposées, créez une couche unifiée qui rassemble toute les zones de rencontre pour avoir une seule emprise, ce sera plus simple.
 
 2. Faire une intersections des couches avec les zones de rencontres (distance 20m) pour repérer les secteurs à fort potentiel d'attractivité.
 
 3. Faire une belle carte depuis QGIS.
+
+## Bonus Info - Boîte à outils de manipulation de données géographiques
+
+Créer un projet python dans votre dépôt Github pour manipuler des données géographiques.
+
+### Bonnes pratiques de dépôt GitHub
+
+- Configurer un .gitignore adapté : exclure les fichiers volumineux générés en sortie, ainsi que les fichiers temporaires. GitHub limite la taille des fichiers et du dépôt
+
+- Rédiger un README.md pour expliquer l’objectif du projet, l’installation de l’environnement, des exemples de commandes/exécutions
+
+
+### Deux parcours au choix
+
+A. Parcours Facile : Notebook exploratoire et reproductible
+    - Réaliser un Jupyter Notebook clair, commenté et exécutable
+
+B. Parcours Difficile : Module Python + interface en ligne de commande (argparse)
+    - Organiser le code dans des modules Python réutilisables
+    - Créer une CLI avec argparse proposant des sous-commandes (inspect, convert, osm, intersect, etc.) avec des arguments typés, des valeurs par défaut pertinentes et des messages d’aide (--help).
+
+### Fonctions à implémenter (exemples et pistes)
+
+1. Analyse et diagnostic des fichiers en entrée
+
+    - Métadonnées générales : taille du fichier sur le disque, nombre d’entités, types de géométries présents, emprise spatiale, CRS 
+
+
+2. Conversion de formats et gestion des CRS
+
+    - conversion vers d'autres formats de données
+    - changer le crs 
+
+3. Récupération de données OSM par clé/valeur et zone
+
+    - Prendre en entrée une zone (nom de lieu/commune, emprise [minx, miny, maxx, maxy] ou polygone), un couple clé/valeur OSM et un chemin/format de sortie
+
+4. Croisements et analyses spatiales 
+
+    - avec des couches en entrée faire une intersection, buffer, jointures, agrégations
+    - calcule de centroïde
+
+5. Visualiser les données géographiques avec matplotlib
+
+6. Il y a toujours pleins de choses à faire... GLHF !

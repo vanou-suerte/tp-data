@@ -14,7 +14,7 @@ format:
 ---
 
 # Objectifs
-Dans ce TP, vous allez apprendre à manipuler les principaux formats standards de données en géomatique pour comprendre les différences entre elles et les récupérer depuis différentes sources.
+Dans ce TP, vous allez apprendre à manipuler les principaux formats standards de données en géomatique pour comprendre les différences entre eux et les récupérer depuis différentes sources.
 
 - Comprendre les différences entre les formats standards en géomatique :
     - CSV
@@ -26,7 +26,6 @@ Dans ce TP, vous allez apprendre à manipuler les principaux formats standards d
 - Charger des données depuis différentes sources :
     - BDTOPO depuis carte.gouv
     - Points d'intérêt (POI) depuis OpenStreetMap (OSM)
-    - (des données de recherche depuis entrepot.recherche.data.gouv.fr)
     - des flux depuis QGIS
 
 # Enoncé
@@ -34,7 +33,7 @@ Dans ce TP, vous allez apprendre à manipuler les principaux formats standards d
 Dans le cadre du projet [Intforout](https://www.umr-lastig.fr/intforout/), John Dawson, un chercheur du [LASTIG](https://www.umr-lastig.fr/fr/) a produit un jeu de données des zones de rencontre potentielles entre chamois et randonneurs sur la zone de la [Réserve Nationale de Chasse et de Faune Sauvage des Bauges](https://parcdesbauges.com/reserve-nationale-de-chasse-et-de-faune-sauvage-rncfs/) qui est à cheval sur la Savoie et la Haute-Savoie, en utilisant plusieurs sources (traces GPS de randonneurs issues de Strava, Visorando, Camptocamp, etc.). Plus d'info sur la methode utilisée [ici pour les curieux.ses](https://www.researchgate.net/publication/406893378_A_Method_for_Spatializing_Disturbance_by_Detecting_Human-Wildlife_Encounters_from_GNSS_Trajectories) 
 
 
-Votre mission est de manipuler ce jeu de données de recherche et de le croiser avec d'autres données de références notamment la BDTOPO et OSM pour possiblement comprendre ce qui attire les randonneurs et repérer les secteurs à fort potentiel d’interaction.
+Votre mission est de manipuler ce jeu de données de recherche et de le croiser avec d'autres données de références notamment de la BDTOPO et OSM pour possiblement comprendre ce qui attire les randonneurs et repérer les secteurs à fort potentiel d’interaction.
 Vous découvrirez les limites de certains formats de données géographiques...
 
 ## Dossier du TP fourni 
@@ -73,14 +72,14 @@ Pour info, on vous a donnée directement le fichier des zones de rencontres de J
 
 ## Etape 1 - Inspection du jeu de données
 
-1. Ouvrir le fichier csv dans un editeur ou un tableur
+1. Ouvrir le fichier CSV dans un editeur ou un tableur
 
     a. Quelle est la taille du CSV ?
     b. Combien y'a t-il de lignes et de colonnes ?
 
 2. Ouvrir QGIS et créer un nouveau projet 
 
-    a. Ajouter le flux WMTS du fond carte Plan IGN issu de la Géoplateforme et placez-le en arrière-plan. (Vous l'avez fait dans le TP de carto GEOM02 !)
+    a. Ajouter le flux WMTS du fond carte Plan IGN issu de la Géoplateforme et placez-le en arrière-plan. Vous l'avez fait dans le TP de carto GEOM02, cela ne fait pas de mal de le refaire ;)
 
 ::: {.callout-tip}
 ## URL du service WMTS de la Géoplateforme de l'IGN
@@ -107,17 +106,61 @@ Pour info, on vous a donnée directement le fichier des zones de rencontres de J
     a. Avec quel format fait-on planter qgis ?
 
 
-
-## Etape 2 - Mesures et analyses des fichiers
+## Etape 3 - Mesures et analyses des fichiers
 
 1. Exécuter la cellule de mesures des performance et taille des formats de données.
 
 
 2. Pause explications
 
-## Etape 3 - Ajout des chemins de randonnées venant de la BDTOPO
+## Etape 4 - Ajout de données venant de la BDTOPO
 
 Qu'est-ce qui peut bien attirer les randonneurs dans ou autour de ces zones ? Les chamois occupent des versants ou zones d’altitude spécifiques, mais les rencontres peuvent avoir un lien avec les itinéraires empruntés et des points d’arrêt ou d’attractivité des promeneurs. 
 
-1. Récupérer les chemins de randonnée depuis la BD TOPO via cartes.gouv.fr (en filtrant sur la nature d’itinéraire pédestre / sentier)
+1. Dans votre projet QGIS, garder une seule couche des zones de rencontres.
 
+2. Récupérer les chemins de randonnées et les parcs/réserves de la Savoie depuis la BD TOPO via [cartes.gouv.fr](https://cartes.gouv.fr/rechercher-une-donnee/search)
+
+::: {.callout-tip}
+## Un outil en ligne de documentation de la BDTopo
+[BDTOPO explorer](https://bdtopoexplorer.ign.fr/) permet de consulter et de rechercher la structure, les thèmes, les classes et les attributs de la BD TOPO, la base de données topographique de référence du territoire français.
+:::
+
+        a. Quelles sont les classes de la BDTOPO qui vont nous intéresser ?
+        b. Mettez les données téléchargées dans le dossier data
+
+3. Créez la couche qui correspond à la Réserve Nationale de Chasse et de Faune Sauvage des Bauges à partir des données téléchargées. La méthode la plus simple c'est via la table d'attribut notamment avec une selection par expression ("toponyme" = 'Réserve Nationale de Chasse et de Faune Sauvage des Bauges').
+
+    a. Sauvegarder cette couche dans le format que vous préférez dans le dossier data (créer un dossier donneesCreees si vous le souhaitez)
+    b. Exportez cette couche au format Geojson et puis regardons ce fichier d'un peu plus près...
+
+::: {.callout-tip}
+## Un outil web gratuit et open source pour le GeoJSON
+[geojson.io](https://geojson.io/) est un site qui permet de créer, visualiser et modifier des données géographiques au format GeoJSON directement dans le navigateur. Cela permet notamment de vérifier et déboguer des fichiers pour contrôler l'affichage, repérer des erreurs de syntaxe ou détecter des coordonnées inversées (latitude/longitude).
+:::
+
+        c. Visualiser votre GeoJSON dans geojson.io, vous y arrivez ?
+
+
+4. A partir de cette couche, isoler les chemins de randonnées qui se trouve à l'intérieur de la réserve.
+
+    a. Utilisez l'outil de selection dans QGIS
+    b. Sauvegarder cette couche dans le format que vous préférez dans le dossier data
+    c. Supprimez la couche de tous les parcs/reserves et les chemins de randonnées de la Savoie pour nettoyer un peu le projet
+
+## Etape 5 - Ajout de données venant d'OpenStreetMap (OSM)
+
+Maintenant qu'on a ajouté les chemins de randonnée, on va intégrer des POI utiles ou attractifs pour les randonneurs (points d'eau, aires de pique-nique, points de vue remarquables). OSM est une base de données cartographiques mondiale, collaborative et libre, souvent surnommée le « Wikipédia de la carte ». Créé en 2004, ce projet permet à n'importe qui d'ajouter, de modifier et de réutiliser gratuitement des données géographiques sous licence libre.
+
+1. Ajouter les POI qui vous semblent pertinent qui se trouvent dans la réserve (points d’eau, points de vue / spots photo, aires de pique-nique etc...)
+
+    a. Exécutez la cellule correspondante du jupyter notebook
+    b. Via [overpassturbo](http://overpass-turbo.eu/)
+
+## Bonus - Repérer les zones à fort potentiel d'attrictivité autour des POI
+
+1. Beaucoup de zones de rencontres sont superposées, créez une couche unifiée qui rassemble toute les zones de rencontre pour avoir une seule emprise, ce sera plus simple.
+
+2. Faire une intersections des couches avec les zones de rencontres (distance 20m) pour repérer les secteurs à fort potentiel d'attractivité.
+
+3. Faire une belle carte depuis QGIS.
